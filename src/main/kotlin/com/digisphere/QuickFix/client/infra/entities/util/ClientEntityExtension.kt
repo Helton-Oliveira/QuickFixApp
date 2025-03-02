@@ -1,4 +1,4 @@
-package com.digisphere.QuickFix.util
+package com.digisphere.QuickFix.client.infra.entities.util
 
 import com.digisphere.QuickFix.client.DTOs.ClientForm
 import com.digisphere.QuickFix.client.DTOs.ClientView
