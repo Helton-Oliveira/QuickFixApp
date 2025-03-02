@@ -1,9 +1,8 @@
 package com.digisphere.QuickFix.infra.repository
 
-interface GenericRepository<TEntity, ID> {
-
-    fun getAll(): List<TEntity>
-    fun getById(id: ID): TEntity
-    fun persist(entity: TEntity): TEntity
-    fun deleteById(id: ID)
+interface GenericRepository {
+    fun getAll(): List<Any>
+    fun <ID> getById(id: ID): Any
+    fun <Any> persist(entity: Any): Any
+    fun <ID> deleteById(id: ID)
 }

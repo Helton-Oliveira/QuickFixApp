@@ -3,23 +3,33 @@ package com.digisphere.QuickFix.client.infra.repository
 import com.digisphere.QuickFix.client.infra.entities.ClientEntity
 import com.digisphere.QuickFix.infra.repository.GenericRepository
 
-class ClientRepositoryInMemory : GenericRepository<ClientEntity, String> {
+class ClientRepositoryInMemory : GenericRepository{
     private val fakeData = mutableListOf<ClientEntity>()
 
-    override fun getAll(): List<ClientEntity> {
+    override fun getAll(): List<Any> {
         TODO("Not yet implemented")
     }
 
-    override fun deleteById(id: String) {
+    override fun <ID> getById(id: ID): Any {
         TODO("Not yet implemented")
     }
 
-    override fun persist(entity: ClientEntity): ClientEntity {
-        fakeData.add(entity)
-        return fakeData.first { e -> e.cpf == entity.cpf }
+    override fun <Any> persist(entity: Any): Any {
+        if(entity is ClientEntity) {
+            fakeData.add(entity)
+            return fakeData.first { e -> e.cpf == entity.cpf } as Any
+        }
+        throw IllegalArgumentException("Invalid entity type")
     }
 
-    override fun getById(id: String): ClientEntity {
+    override fun <ID> deleteById(id: ID) {
         TODO("Not yet implemented")
     }
+
+
+    /*override fun <CLientEntity> persist(entity: ClientEntity): ClientEntity {
+
+    }*/
+
+
 }

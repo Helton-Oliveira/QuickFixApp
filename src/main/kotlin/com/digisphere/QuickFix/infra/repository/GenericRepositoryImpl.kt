@@ -6,20 +6,25 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Repository
 
 @Repository
-class GenericRepositoryImpl<TEntity : Any, ID : Any>(
-    @PersistenceContext protected val connection: Connection<TEntity>,
+class GenericRepositoryImpl<TEntity : Any>(
+    @PersistenceContext protected val connection: Connection,
     protected val entityType: Class<TEntity>
-) : GenericRepository<TEntity, ID>  {
+) : GenericRepository {
 
     @Transactional
     override fun getAll(): List<TEntity> {
-        val query = connection.query("FROM ${entityType.simpleName}", entityType)
-        return query.resultList
+        val query = connection.executeTransaction{em ->
+            val query = em.createQuery("FROM ${entityType.simpleName}", entityType)
+            query.resultList
+        }
+        return query
     }
 
     @Transactional
-    override fun deleteById(id: ID) {
-        val query = connection.query("FROM ${entityType.simpleName} WHERE id=:id ", entityType)
+    override fun <ID> deleteById(id: ID) {
+        val query = connection.executeTransaction{ em ->
+            em.createQuery("FROM ${entityType.simpleName} WHERE id=:id ", entityType)
+        }
         query.setParameter("id", id)
         val entity = query.singleResult
         connection.executeTransaction { em ->
@@ -29,16 +34,19 @@ class GenericRepositoryImpl<TEntity : Any, ID : Any>(
     }
 
     @Transactional
-    override fun persist(entity: TEntity): TEntity {
+    override fun <TEntity> persist(entity: TEntity): TEntity {
         return connection.executeTransaction { em ->
             em.merge(entity)
         }
     }
 
     @Transactional
-    override fun getById(id: ID): TEntity {
-        val query = connection.query("FROM ${entityType.simpleName} WHERE id=:id ", entityType)
-        query.setParameter("id", id)
-        return query.singleResult
+    override fun <ID> getById(id: ID): TEntity {
+        return connection.executeTransaction { em ->
+            val query = em.createQuery("FROM ${entityType.simpleName} WHERE id=:id ", entityType)
+            query.setParameter("id", id)
+            query.singleResult
+        }
+
     }
 }
