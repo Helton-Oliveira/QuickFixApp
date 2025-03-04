@@ -1,0 +1,8 @@
+CREATE TABLE clients (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    cpf VARCHAR(20) NOT NULL,
+    name VARCHAR(20) NOT NULL,
+    email VARCHAR(20) NOT NULL,
+    password VARCHAR(50) NOT NULL,
+    role VARCHAR(20) NOT NULL
+);
