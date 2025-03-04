@@ -7,10 +7,6 @@ class TestDatabaseAdapter : Connection {
     private val entityManagerFactory = Persistence.createEntityManagerFactory("h2db")
     private val entityManager: EntityManager = entityManagerFactory.createEntityManager()
 
-   /* override fun query(statement: String, entityType: Class<TEntity>): TypedQuery<TEntity> {
-        return entityManager.createQuery(statement, entityType)
-    }*/
-
     override fun <T> executeTransaction(action: (EntityManager) -> T): T {
         entityManager.transaction.begin()
         val entity = action(entityManager)
