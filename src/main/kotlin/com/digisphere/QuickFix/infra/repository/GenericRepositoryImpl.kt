@@ -1,15 +1,15 @@
 package com.digisphere.QuickFix.infra.repository
 
 import com.digisphere.QuickFix.infra.connection.Connection
-import jakarta.persistence.PersistenceContext
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Repository
 
 @Repository
 class GenericRepositoryImpl<TEntity : Any>(
-    @PersistenceContext protected val connection: Connection,
+    protected val connection: Connection,
     protected val entityType: Class<TEntity>
 ) : GenericRepository {
+
 
     @Transactional
     override fun getAll(): List<TEntity> {
@@ -41,12 +41,12 @@ class GenericRepositoryImpl<TEntity : Any>(
     }
 
     @Transactional
-    override fun <ID> getById(id: ID): TEntity {
+    override fun <TEntity> getById(id: Long): TEntity {
         return connection.executeTransaction { em ->
-            val query = em.createQuery("FROM ${entityType.simpleName} WHERE id=:id ", entityType)
-            query.setParameter("id", id)
-            query.singleResult
+            val query = em.createQuery("FROM ${entityType.simpleName} WHERE id=:id ", entityType).also {
+                it.setParameter("id", id)
+            }
+            query.singleResult as TEntity
         }
-
     }
 }

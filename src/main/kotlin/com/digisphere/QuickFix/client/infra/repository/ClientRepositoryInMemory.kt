@@ -10,7 +10,7 @@ class ClientRepositoryInMemory : GenericRepository{
         TODO("Not yet implemented")
     }
 
-    override fun <ID> getById(id: ID): Any {
+    override fun <Any> getById(id: Long): Any {
         TODO("Not yet implemented")
     }
 
