@@ -5,4 +5,8 @@ import com.digisphere.QuickFix.infra.connection.Connection
 import com.digisphere.QuickFix.infra.repository.GenericRepositoryImpl
 
 class ClientRepository(manager: Connection)
-    : GenericRepositoryImpl<ClientEntity>(manager, ClientEntity::class.java)
+    : GenericRepositoryImpl<ClientEntity>(manager) {
+        init {
+            this.entityType = ClientEntity::class.java
+        }
+    }

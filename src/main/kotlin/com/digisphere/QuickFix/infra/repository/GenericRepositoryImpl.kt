@@ -7,9 +7,8 @@ import org.springframework.stereotype.Repository
 @Repository
 class GenericRepositoryImpl<TEntity : Any>(
     protected val connection: Connection,
-    protected val entityType: Class<TEntity>
 ) : GenericRepository {
-
+    protected final lateinit var entityType: Class<TEntity>
 
     @Transactional
     override fun getAll(): List<TEntity> {
