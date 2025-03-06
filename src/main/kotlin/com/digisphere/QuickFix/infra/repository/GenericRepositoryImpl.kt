@@ -11,24 +11,24 @@ class GenericRepositoryImpl<TEntity : Any>(
     protected final lateinit var entityType: Class<TEntity>
 
     @Transactional
-    override fun getAll(): List<TEntity> {
+    override fun <TEntity> getAll(): List<TEntity> {
         val query = connection.executeTransaction{em ->
             val query = em.createQuery("FROM ${entityType.simpleName}", entityType)
             query.resultList
         }
-        return query
+        return query.map { entity -> entity as TEntity }
     }
 
     @Transactional
-    override fun <ID> deleteById(id: ID) {
+    override fun <TEntity> deleteById(id: Long): TEntity {
         val query = connection.executeTransaction{ em ->
             em.createQuery("FROM ${entityType.simpleName} WHERE id=:id ", entityType)
         }
         query.setParameter("id", id)
         val entity = query.singleResult
-        connection.executeTransaction { em ->
+        return connection.executeTransaction { em ->
             em.remove(if (em.contains(entity)) entity else em.merge(entity))
-            entity
+            entity as TEntity
         }
     }
 

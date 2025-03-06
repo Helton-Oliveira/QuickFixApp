@@ -6,7 +6,7 @@ import com.digisphere.QuickFix.infra.repository.GenericRepository
 class ClientRepositoryInMemory : GenericRepository{
     private val fakeData = mutableListOf<ClientEntity>()
 
-    override fun getAll(): List<Any> {
+    override fun <Any> getAll(): List<Any> {
         TODO("Not yet implemented")
     }
 
@@ -22,14 +22,7 @@ class ClientRepositoryInMemory : GenericRepository{
         throw IllegalArgumentException("Invalid entity type")
     }
 
-    override fun <ID> deleteById(id: ID) {
+    override fun <Any> deleteById(id: Long): Any {
         TODO("Not yet implemented")
     }
-
-
-    /*override fun <CLientEntity> persist(entity: ClientEntity): ClientEntity {
-
-    }*/
-
-
 }
