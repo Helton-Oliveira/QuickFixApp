@@ -65,6 +65,7 @@ class ClientUseCaseTest {
         val updateClient = UpdateClientImpl(repository)
         val newClient = UpdateCustomerDataForm(1, "Clark Kent", "clark@justice.com")
         val updatedClient = updateClient.execute(newClient)
+        assertThat(updatedClient.id).isEqualTo(1)
         assertThat(updatedClient.name).isEqualTo("Clark Kent")
         assertThat(updatedClient.email).isEqualTo("clark@justice.com")
     }

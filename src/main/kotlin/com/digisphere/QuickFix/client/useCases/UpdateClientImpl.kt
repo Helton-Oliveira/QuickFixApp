@@ -11,11 +11,9 @@ import com.digisphere.QuickFix.infra.repository.GenericRepository
 class UpdateClientImpl(private val repository: GenericRepository) : UpdateClient {
 
     override fun execute(newData: UpdateCustomerDataForm): ClientView {
-        var clientEntity = repository.getById<ClientEntity>(newData.id)
+        val clientEntity = repository.getById<ClientEntity>(newData.id)
         val clientDomain = clientEntity.toDomainModel()
         clientDomain.update(newData)
-        clientEntity = clientDomain.toEntity()
-        repository.persist(clientEntity)
-        return clientEntity.toViewModel()
+        return repository.persist(clientDomain.toEntity()).toViewModel()
     }
 }
