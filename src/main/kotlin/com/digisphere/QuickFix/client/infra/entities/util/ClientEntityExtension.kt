@@ -10,12 +10,14 @@ fun ClientEntity.toViewModel(): ClientView {
         name = this.name,
         email = this.email,
         cpf = this.cpf,
-        role = this.role
+        role = this.role,
+        id = this.id ?: 0L
     )
 }
 
 fun ClientEntity.toDomainModel(): Client {
     return Client(
+        id = this.id,
         name = this.name,
         email = this.email,
         cpf = this.cpf,
@@ -26,6 +28,7 @@ fun ClientEntity.toDomainModel(): Client {
 
 fun Client.toEntity(): ClientEntity {
     return ClientEntity(
+        id = this.id,
         cpf = this.cpf,
         name = this.name,
         email = this.email,

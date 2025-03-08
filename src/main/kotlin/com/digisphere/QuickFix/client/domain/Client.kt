@@ -2,13 +2,22 @@ package com.digisphere.QuickFix.client.domain
 
 import com.digisphere.QuickFix.client.DTOs.UpdateCustomerDataForm
 
-data class Client (
-     var cpf: String,
-     var name: String,
-     var email: String,
-     var password: String,
-     var role: Role,
+class Client (
+    val id: Long? = null,
+    val cpf: String,
+    name: String,
+    email: String,
+    password: String,
+    val role: Role,
 ) {
+
+    var name: String = name
+        private set
+    var email: String = email
+        private set
+    var password: String = password
+        private set
+
     fun update(newData: UpdateCustomerDataForm) {
 
         if(newData.name?.isNotBlank() == true) {
@@ -22,8 +31,11 @@ data class Client (
         if(newData.password?.isNotBlank() == true) {
             this.password = newData.password
         }
-
-
-
     }
+
+    override fun toString(): String {
+        return "Client(id=$id, cpf='$cpf', role=$role, name='$name', email='$email', password='$password')"
+    }
+
+
 }
