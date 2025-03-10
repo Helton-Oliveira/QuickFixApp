@@ -1,12 +1,12 @@
-package com.digisphere.QuickFix.client.infra.entities.util
+package com.digisphere.QuickFix.users.infra.entities.util
 
-import com.digisphere.QuickFix.client.DTOs.ClientForm
-import com.digisphere.QuickFix.client.DTOs.ClientView
-import com.digisphere.QuickFix.client.domain.Client
-import com.digisphere.QuickFix.client.infra.entities.ClientEntity
+import com.digisphere.QuickFix.users.DTOs.UserForm
+import com.digisphere.QuickFix.users.DTOs.UserView
+import com.digisphere.QuickFix.users.domain.User
+import com.digisphere.QuickFix.users.infra.entities.UserEntity
 
-fun ClientEntity.toViewModel(): ClientView {
-    return ClientView(
+fun UserEntity.toViewModel(): UserView {
+    return UserView(
         name = this.name,
         email = this.email,
         cpf = this.cpf,
@@ -15,8 +15,8 @@ fun ClientEntity.toViewModel(): ClientView {
     )
 }
 
-fun ClientEntity.toDomainModel(): Client {
-    return Client(
+fun UserEntity.toDomainModel(): User {
+    return User(
         id = this.id,
         name = this.name,
         email = this.email,
@@ -26,8 +26,8 @@ fun ClientEntity.toDomainModel(): Client {
     )
 }
 
-fun Client.toEntity(): ClientEntity {
-    return ClientEntity(
+fun User.toEntity(): UserEntity {
+    return UserEntity(
         id = this.id,
         cpf = this.cpf,
         name = this.name,
@@ -37,8 +37,8 @@ fun Client.toEntity(): ClientEntity {
     )
 }
 
-fun ClientForm.toEntity(): ClientEntity {
-    return ClientEntity(
+fun UserForm.toEntity(): UserEntity {
+    return UserEntity(
         cpf = this.cpf,
         name = this.name,
         email = this.email,

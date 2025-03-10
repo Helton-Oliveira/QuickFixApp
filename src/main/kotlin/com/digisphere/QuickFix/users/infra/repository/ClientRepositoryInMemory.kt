@@ -1,10 +1,10 @@
-package com.digisphere.QuickFix.client.infra.repository
+package com.digisphere.QuickFix.users.infra.repository
 
-import com.digisphere.QuickFix.client.infra.entities.ClientEntity
+import com.digisphere.QuickFix.users.infra.entities.UserEntity
 import com.digisphere.QuickFix.infra.repository.GenericRepository
 
 class ClientRepositoryInMemory : GenericRepository{
-    private val fakeData = mutableListOf<ClientEntity>()
+    private val fakeData = mutableListOf<UserEntity>()
 
     override fun <Any> getAll(): List<Any> {
         TODO("Not yet implemented")
@@ -15,7 +15,7 @@ class ClientRepositoryInMemory : GenericRepository{
     }
 
     override fun <Any> persist(entity: Any): Any {
-        if(entity is ClientEntity) {
+        if(entity is UserEntity) {
             fakeData.add(entity)
             return fakeData.first { e -> e.cpf == entity.cpf } as Any
         }

@@ -1,11 +1,11 @@
-package com.digisphere.QuickFix.client.infra.entities
+package com.digisphere.QuickFix.users.infra.entities
 
-import com.digisphere.QuickFix.client.domain.Role
+import com.digisphere.QuickFix.users.domain.Role
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "clients")
-data class ClientEntity (
+@Table(name = "users")
+data class UserEntity (
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long? = null,
     @Column(unique = true)

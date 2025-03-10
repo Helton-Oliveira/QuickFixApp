@@ -1,4 +1,4 @@
-package com.digisphere.QuickFix.client.DTOs
+package com.digisphere.QuickFix.users.DTOs
 
 data class UpdateCustomerDataForm (
     val id: Long,

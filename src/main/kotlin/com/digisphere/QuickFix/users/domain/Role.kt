@@ -1,4 +1,4 @@
-package com.digisphere.QuickFix.client.domain
+package com.digisphere.QuickFix.users.domain
 
 enum class Role {
     CLIENT,

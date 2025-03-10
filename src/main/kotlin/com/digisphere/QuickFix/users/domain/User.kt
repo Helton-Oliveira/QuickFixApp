@@ -1,8 +1,8 @@
-package com.digisphere.QuickFix.client.domain
+package com.digisphere.QuickFix.users.domain
 
-import com.digisphere.QuickFix.client.DTOs.UpdateCustomerDataForm
+import com.digisphere.QuickFix.users.DTOs.UpdateCustomerDataForm
 
-class Client (
+class User (
     val id: Long? = null,
     val cpf: String,
     name: String,
