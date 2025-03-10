@@ -1,6 +1,6 @@
-package com.digisphere.QuickFix.users.useCases
+package com.digisphere.QuickFix.users.sharedResources.sharedUseCases
 
-import com.digisphere.QuickFix.users.infra.entities.UserEntity
+import com.digisphere.QuickFix.users.sharedResources.infra.entities.UserEntity
 import com.digisphere.QuickFix.infra.repository.GenericRepository
 
 class DeleteUserImpl(private val repository: GenericRepository) : DeleteUser {

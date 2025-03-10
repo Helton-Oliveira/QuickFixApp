@@ -1,14 +1,16 @@
-package com.digisphere.QuickFix.users.domain
+package com.digisphere.QuickFix.users.clientUser.domain
 
-import com.digisphere.QuickFix.users.DTOs.UpdateCustomerDataForm
+import com.digisphere.QuickFix.users.clientUser.DTOs.UpdateCustomerDataForm
+import com.digisphere.QuickFix.users.sharedResources.typeUsers.Type
 
 class User (
     val id: Long? = null,
     val cpf: String,
     name: String,
     email: String,
+    phone: String,
     password: String,
-    val role: Role,
+    val type: Type,
 ) {
 
     var name: String = name
@@ -16,6 +18,8 @@ class User (
     var email: String = email
         private set
     var password: String = password
+        private set
+    var phone: String = phone
         private set
 
     fun update(newData: UpdateCustomerDataForm) {
@@ -34,7 +38,7 @@ class User (
     }
 
     override fun toString(): String {
-        return "Client(id=$id, cpf='$cpf', role=$role, name='$name', email='$email', password='$password')"
+        return "Client(id=$id, cpf='$cpf', role=$type, name='$name', email='$email', password='$password')"
     }
 
 

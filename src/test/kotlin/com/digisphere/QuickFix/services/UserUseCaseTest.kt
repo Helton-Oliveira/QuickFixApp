@@ -1,12 +1,16 @@
 package com.digisphere.QuickFix.services
 
-import com.digisphere.QuickFix.users.DTOs.UserForm
-import com.digisphere.QuickFix.users.DTOs.UpdateCustomerDataForm
-import com.digisphere.QuickFix.users.domain.Role
-import com.digisphere.QuickFix.users.infra.repository.ClientRepository
-import com.digisphere.QuickFix.users.infra.repository.ClientRepositoryInMemory
-import com.digisphere.QuickFix.users.useCases.*
+import com.digisphere.QuickFix.users.clientUser.DTOs.UserForm
+import com.digisphere.QuickFix.users.clientUser.DTOs.UpdateCustomerDataForm
+import com.digisphere.QuickFix.users.sharedResources.typeUsers.Type
+import com.digisphere.QuickFix.users.sharedResources.infra.repository.UserRepository
+import com.digisphere.QuickFix.users.sharedResources.infra.repository.ClientRepositoryInMemory
 import com.digisphere.QuickFix.infra.connection.TestDatabaseAdapter
+import com.digisphere.QuickFix.users.clientUser.useCases.UpdateUserImpl
+import com.digisphere.QuickFix.users.clientUser.useCases.UserRegisterImpl
+import com.digisphere.QuickFix.users.sharedResources.sharedUseCases.DeleteUserImpl
+import com.digisphere.QuickFix.users.sharedResources.sharedUseCases.FindAllUsersImpl
+import com.digisphere.QuickFix.users.sharedResources.sharedUseCases.FindUserByIdImpl
 import org.assertj.core.api.Assertions.assertThat
 import org.flywaydb.core.Flyway
 import org.junit.jupiter.api.BeforeEach
@@ -14,11 +18,11 @@ import org.junit.jupiter.api.Test
 
 class UserUseCaseTest {
     private val connection = TestDatabaseAdapter()
-    private val repository = ClientRepository(connection)
+    private val repository = UserRepository(connection)
     private val repositoryFake = ClientRepositoryInMemory()
     private lateinit var userForm1: UserForm
-    private val userForm2 = UserForm( name = "Steve Rogers", email = "Steve@avengers.com", cpf = "1234567890", password = "senha1234", role = Role.CLIENT)
-    private val userForm3 = UserForm( name = "Tchalla", email = "Tchalla@avengers.com", cpf = "1234567890", password = "senha1234", role = Role.CLIENT)
+    private val userForm2 = UserForm( name = "Steve Rogers", email = "Steve@avengers.com", cpf = "1234567890", password = "senha1234", type = Type.CLIENT, "3432535")
+    private val userForm3 = UserForm( name = "Tchalla", email = "Tchalla@avengers.com", cpf = "1234567890", password = "senha1234", type = Type.CLIENT, "32432423434")
     private lateinit var flyway: Flyway
 
     @BeforeEach
@@ -28,7 +32,7 @@ class UserUseCaseTest {
             .locations("classpath:db/migration")
             .load()
         flyway.migrate()
-        userForm1 = UserForm( name = "Tony Stark", email = "Tony@avengers.com", cpf = "1234567890", password = "senha1234", role = Role.CLIENT)
+        userForm1 = UserForm( name = "Tony Stark", email = "Tony@avengers.com", cpf = "1234567890", password = "senha1234", type = Type.CLIENT, "3432432")
         this.`deve criar um usuario`()
     }
 
