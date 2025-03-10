@@ -4,7 +4,7 @@ import jakarta.persistence.EntityManager
 import jakarta.persistence.Persistence
 
 class TestDatabaseAdapter : Connection {
-    private val entityManagerFactory = Persistence.createEntityManagerFactory("h2db")
+    private val entityManagerFactory = Persistence.createEntityManagerFactory("mysqldb")
     private val entityManager: EntityManager = entityManagerFactory.createEntityManager()
 
     override fun <T> executeTransaction(action: (EntityManager) -> T): T {

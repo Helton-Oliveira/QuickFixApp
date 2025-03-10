@@ -1,0 +1,5 @@
+dev:
+  activatedProperties:
+    jdbc.url: jdbc:mysql://localhost:3306/devDB
+    jdbc.user: dev_user
+    jdbc.password: dev_password
