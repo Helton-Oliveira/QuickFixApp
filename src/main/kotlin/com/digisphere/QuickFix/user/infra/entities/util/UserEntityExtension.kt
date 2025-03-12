@@ -1,9 +1,8 @@
 package com.digisphere.QuickFix.user.infra.entities.util
 
-import com.digisphere.QuickFix.users.user.DTOs.UserForm
-import com.digisphere.QuickFix.users.user.DTOs.UserView
-import com.digisphere.QuickFix.users.user.domain.User
-import com.digisphere.QuickFix.user.infra.entities.UserEntity
+import com.digisphere.QuickFix.user.DTOs.UserForm
+import com.digisphere.QuickFix.user.DTOs.UserView
+import com.digisphere.QuickFix.user.domain.User
 
 fun com.digisphere.QuickFix.user.infra.entities.UserEntity.toViewModel(): UserView {
     return UserView(

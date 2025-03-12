@@ -1,10 +1,10 @@
 package com.digisphere.QuickFix.user.useCases.CRUDoperations
 
-import com.digisphere.QuickFix.users.user.DTOs.UserView
-import com.digisphere.QuickFix.users.user.DTOs.UpdateCustomerDataForm
-import com.digisphere.QuickFix.users.user.infra.entities.util.toDomainModel
-import com.digisphere.QuickFix.users.user.infra.entities.util.toEntity
-import com.digisphere.QuickFix.users.user.infra.entities.util.toViewModel
+import com.digisphere.QuickFix.user.DTOs.UpdateCustomerDataForm
+import com.digisphere.QuickFix.user.DTOs.UserView
+import com.digisphere.QuickFix.user.infra.entities.util.toDomainModel
+import com.digisphere.QuickFix.user.infra.entities.util.toEntity
+import com.digisphere.QuickFix.user.infra.entities.util.toViewModel
 
 class UpdateUserImpl(private val repository: com.digisphere.QuickFix.user.infra.repository.UserRepository) :
     UpdateUser {

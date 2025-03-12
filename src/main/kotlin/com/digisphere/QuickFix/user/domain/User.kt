@@ -1,7 +1,7 @@
 package com.digisphere.QuickFix.user.domain
 
-import com.digisphere.QuickFix.users.user.DTOs.UpdateCustomerDataForm
-import com.digisphere.QuickFix.users.user.typeUsers.Type
+import com.digisphere.QuickFix.user.DTOs.UpdateCustomerDataForm
+import com.digisphere.QuickFix.user.typeUsers.Type
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 class User (

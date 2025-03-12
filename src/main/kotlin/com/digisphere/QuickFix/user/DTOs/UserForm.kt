@@ -1,6 +1,6 @@
 package com.digisphere.QuickFix.user.DTOs
 
-import com.digisphere.QuickFix.users.user.typeUsers.Type
+import com.digisphere.QuickFix.user.typeUsers.Type
 
 data class UserForm (
     val name: String,
