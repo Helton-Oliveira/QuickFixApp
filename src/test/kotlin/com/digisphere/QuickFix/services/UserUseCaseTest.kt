@@ -1,63 +1,51 @@
 package com.digisphere.QuickFix.services
 
-import com.digisphere.QuickFix.users.clientUser.DTOs.UserForm
-import com.digisphere.QuickFix.users.clientUser.DTOs.UpdateCustomerDataForm
-import com.digisphere.QuickFix.users.sharedResources.typeUsers.Type
-import com.digisphere.QuickFix.users.sharedResources.infra.repository.UserRepository
-import com.digisphere.QuickFix.users.sharedResources.infra.repository.ClientRepositoryInMemory
-import com.digisphere.QuickFix.infra.connection.TestDatabaseAdapter
-import com.digisphere.QuickFix.users.clientUser.useCases.UpdateUserImpl
-import com.digisphere.QuickFix.users.clientUser.useCases.UserRegisterImpl
-import com.digisphere.QuickFix.users.sharedResources.sharedUseCases.DeleteUserImpl
-import com.digisphere.QuickFix.users.sharedResources.sharedUseCases.FindAllUsersImpl
-import com.digisphere.QuickFix.users.sharedResources.sharedUseCases.FindUserByIdImpl
+import com.digisphere.QuickFix.testModels.UserEntityTest
+import com.digisphere.QuickFix.testModels.UserFormTest
+import com.digisphere.QuickFix.user.DTOs.UpdateCustomerDataForm
+import com.digisphere.QuickFix.user.infra.repository.UserRepositoryImpl
+import com.digisphere.QuickFix.user.useCases.CRUDoperations.*
+import io.mockk.*
 import org.assertj.core.api.Assertions.assertThat
-import org.flywaydb.core.Flyway
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class UserUseCaseTest {
-    private val connection = TestDatabaseAdapter()
-    private val repository = UserRepository(connection)
-    private val repositoryFake = ClientRepositoryInMemory()
-    private lateinit var userForm1: UserForm
-    private val userForm2 = UserForm( name = "Steve Rogers", email = "Steve@avengers.com", cpf = "1234567890", password = "senha1234", type = Type.CLIENT, "3432535")
-    private val userForm3 = UserForm( name = "Tchalla", email = "Tchalla@avengers.com", cpf = "1234567890", password = "senha1234", type = Type.CLIENT, "32432423434")
-    private lateinit var flyway: Flyway
 
-    @BeforeEach
-    fun setup() {
-        flyway = Flyway.configure()
-        .dataSource("jdbc:h2:mem:h2db;DB_CLOSE_DELAY=-1", "sa", "")
-            .locations("classpath:db/migration")
-            .load()
-        flyway.migrate()
-        userForm1 = UserForm( name = "Tony Stark", email = "Tony@avengers.com", cpf = "1234567890", password = "senha1234", type = Type.CLIENT, "3432432")
-        this.`deve criar um usuario`()
+    private val entityModelTest = UserEntityTest.build()
+    private val userFormTest = UserFormTest.build()
+    private val  repository: UserRepositoryImpl = mockk{
+        every { persist(any()) } returns entityModelTest
+        every { getAll() } returns listOf(entityModelTest)
+        every { getById(any()) } returns entityModelTest
+        every { deleteById(any()) } returns 1L
     }
 
     @Test
-    fun `deve criar um usuario`() {
+    fun `deve executar caso de uso para registrar usuario`() {
         val register = UserRegisterImpl(repository)
-        val client = register.execute(userForm1)
-        register.execute(userForm2)
-        register.execute(userForm3)
+        val client = register.execute(userFormTest)
+
         assertThat(client.name).isEqualTo("Tony Stark")
-        assertThat(client.email).isEqualTo("Tony@avengers.com")
-        assertThat(client.cpf).isEqualTo("1234567890")
+        assertThat(client.email).isEqualTo("tony@ironman.com")
+        assertThat(client.cpf).isEqualTo("8908789789")
+
+        verify (exactly = 1) { repository.persist(any())}
     }
 
     @Test
-    fun `deve buscar um usuario`() {
+    fun `deve executar a busca de um usuario pelo caso de uso`() {
         val finClient = FindUserByIdImpl(repository)
         val client = finClient.execute(1L)
+
         assertThat(client.name).isEqualTo("Tony Stark")
-        assertThat(client.email).isEqualTo("Tony@avengers.com")
-        assertThat(client.cpf).isEqualTo("1234567890")
+        assertThat(client.email).isEqualTo("tony@ironman.com")
+        assertThat(client.cpf).isEqualTo("8908789789")
+
+        verify(exactly = 1) { repository.getById(any()) }
     }
 
     @Test
-    fun `deve buscar usuarios`() {
+    fun `deve executar a busca por todos os usuarios pelo caso de uso`() {
         val finAllClients = FindAllUsersImpl(repository)
         val allClients = finAllClients.execute()
         assertThat(allClients.size).isNotNull()
@@ -65,7 +53,7 @@ class UserUseCaseTest {
     }
 
     @Test
-    fun `deve editar um usuario`() {
+    fun `deve executar a edicao de um usuario pelo caso de uso `() {
         val updateClient = UpdateUserImpl(repository)
         val newClient = UpdateCustomerDataForm(1, "Clark Kent", "clark@justice.com")
         val updatedClient = updateClient.execute(newClient)
@@ -75,10 +63,9 @@ class UserUseCaseTest {
     }
 
     @Test
-    fun `deve deletar um usuario`() {
+    fun `deve executar a delecao de um usuario pelo caso de uso`() {
         val deleteClient = DeleteUserImpl(repository)
         val deletedClient = deleteClient.execute(1)
         assertThat(deletedClient).isEqualTo("Cliente com id: 1 deletado com sucesso!")
     }
-
 }
