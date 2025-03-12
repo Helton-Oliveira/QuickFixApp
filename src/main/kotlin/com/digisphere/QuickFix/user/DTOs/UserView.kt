@@ -1,6 +1,6 @@
-package com.digisphere.QuickFix.users.clientUser.DTOs
+package com.digisphere.QuickFix.user.DTOs
 
-import com.digisphere.QuickFix.users.sharedResources.typeUsers.Type
+import com.digisphere.QuickFix.users.user.typeUsers.Type
 
 data class UserView (
     val id: Long,

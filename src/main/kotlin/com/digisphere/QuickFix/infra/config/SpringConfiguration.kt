@@ -1,26 +1,22 @@
 package com.digisphere.QuickFix.infra.config
 
-import com.digisphere.QuickFix.users.sharedResources.infra.repository.UserRepository
-import com.digisphere.QuickFix.users.clientUser.useCases.UserRegister
-import com.digisphere.QuickFix.users.clientUser.useCases.UserRegisterImpl
-import com.digisphere.QuickFix.users.sharedResources.sharedUseCases.FindUserById
-import com.digisphere.QuickFix.users.sharedResources.sharedUseCases.FindUserByIdImpl
-import com.digisphere.QuickFix.infra.connection.Connection
-import com.digisphere.QuickFix.infra.connection.TestDatabaseAdapter
+import com.digisphere.QuickFix.users.user.useCases.UserRegister
+import com.digisphere.QuickFix.users.user.useCases.UserRegisterImpl
+import com.digisphere.QuickFix.user.infra.repository.UserRepository
+import com.digisphere.QuickFix.users.user.useCases.FindUserById
+import com.digisphere.QuickFix.users.user.useCases.FindUserByIdImpl
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
+
 @Configuration
 class SpringConfiguration {
-    @Bean
-    fun clientConnection(): Connection = TestDatabaseAdapter()
+/*    @Bean
+    fun userRepository(): UserRepositoryImpl = UserRepositoryImpl()*/
 
     @Bean
-    fun registerClient(userRepository: UserRepository): UserRegister = UserRegisterImpl(userRepository)
+    fun registerClient(userRepository: com.digisphere.QuickFix.user.infra.repository.UserRepository): UserRegister = UserRegisterImpl(userRepository)
 
     @Bean
-    fun findClient(userRepository: UserRepository): FindUserById = FindUserByIdImpl(userRepository)
-
-    @Bean
-    fun clientRepository(connection: Connection): UserRepository = UserRepository(connection)
+    fun findClient(userRepository: com.digisphere.QuickFix.user.infra.repository.UserRepository): FindUserById = FindUserByIdImpl(userRepository)
 }

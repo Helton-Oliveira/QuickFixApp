@@ -1,6 +1,6 @@
-package com.digisphere.QuickFix.users.sharedResources.infra.entities
+package com.digisphere.QuickFix.user.infra.entities
 
-import com.digisphere.QuickFix.users.sharedResources.typeUsers.Type
+import com.digisphere.QuickFix.users.user.typeUsers.Type
 import jakarta.persistence.*
 
 @Entity
